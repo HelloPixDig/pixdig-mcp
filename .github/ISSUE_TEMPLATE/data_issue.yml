@@ -1,0 +1,16 @@
+name: Data issue
+description: A wrong figure, a broken link or a misleading statement in a tool or model page
+labels: [data]
+body:
+  - type: input
+    id: tool
+    attributes:
+      label: Tool or model
+      placeholder: "ollama"
+    validations: { required: true }
+  - type: textarea
+    id: what
+    attributes:
+      label: What is wrong?
+      description: Please give a source (official repository, documentation) when you can.
+    validations: { required: true }

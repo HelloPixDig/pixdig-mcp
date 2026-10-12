@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Suggest a tool for the directory
+    url: https://hellopixdig.com/en/partner
+    about: Submit your AI tool (free listing or paid feature). Every application gets a reply.
+  - name: Security vulnerability
+    url: https://github.com/hellopixdig/pixdig-mcp/security/advisories/new
+    about: Please report security problems privately.
