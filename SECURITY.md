@@ -33,4 +33,4 @@ Include the version, what you observed, and how to reproduce it. This is a small
 ## Good practice for users
 
 - Read an install command before your agent runs it. PixDig only provides prompts; it never runs anything for you.
-- Pin the version you reviewed if you want stability: `npx -y github:hellopixdig/pixdig-mcp#v0.2.0`.
+- Pin the version you reviewed if you want stability: `npx -y github:hellopixdig/pixdig-mcp#v0.3.0`.

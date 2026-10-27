@@ -7,7 +7,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 
-const VERSION = "0.2.0";
+const VERSION = "0.3.0";
 const SITE = "https://hellopixdig.com";
 const DATA = process.env.PIXDIG_DATA || `${SITE}/data/api`;
 const TTL_MS = 60 * 60 * 1000; // les données changent une fois par nuit

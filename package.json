@@ -1,6 +1,6 @@
 {
   "name": "pixdig-mcp",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Serveur MCP PixDig : l'annuaire des pépites IA (outils open source, modèles LLM, prompts d'installation) dans Claude Code, Codex, Cursor…",
   "type": "module",
   "bin": {
