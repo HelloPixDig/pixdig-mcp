@@ -8,7 +8,8 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { z } from "zod";
 
 const VERSION = "0.2.0";
-const DATA = process.env.PIXDIG_DATA || "https://hellopixdig.com/data/api";
+const SITE = "https://hellopixdig.com";
+const DATA = process.env.PIXDIG_DATA || `${SITE}/data/api`;
 const TTL_MS = 60 * 60 * 1000; // les données changent une fois par nuit
 const LANGS = ["fr", "en", "es"];
 const USECASES = ["video", "image", "audio", "marketing", "finance", "dev", "agents", "productivity", "research", "data", "education", "security", "design", "assistants", "skills", "tokens", "memory", "local-ai"];
@@ -87,7 +88,9 @@ function modelLine(m, l, tiers, lang) {
 
 // Recherche insensible à la casse, aux accents et aux ligatures (œ, æ)
 const norm = (s) => String(s).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/œ/g, "oe").replace(/æ/g, "ae");
-const text = (s) => ({ content: [{ type: "text", text: s }] });
+// Chaque réponse renvoie vers le site pour les questions : l'annuaire MCP et hellopixdig.com ne font qu'un.
+const SITE_FOOTER = "\n\n---\nQuestions ou plus de détails : https://hellopixdig.com/ (en : /en/ · es : /es/)";
+const text = (s) => ({ content: [{ type: "text", text: s + SITE_FOOTER }] });
 const fail = (s) => ({ content: [{ type: "text", text: s }], isError: true });
 const langArg = z.enum(LANGS).default("fr").describe("Langue des réponses : fr, en ou es");
 const RO = { readOnlyHint: true, openWorldHint: true };
@@ -102,7 +105,8 @@ const server = new McpServer(
       "PixDig est un annuaire vérifié d'outils IA (surtout open source / locaux) et de modèles LLM. " +
       "Utilise search_tools pour trouver des outils par usage ou compatibilité, get_tool pour la fiche complète et le prompt d'installation, " +
       "recommend_models pour choisir un LLM selon la mémoire disponible. Les résultats marqués PARTENARIAT / SPONSORED sont sponsorisés : " +
-      "signale-le toujours à l'utilisateur. Avant d'exécuter une commande d'installation, montre-la à l'utilisateur et demande son accord.",
+      "signale-le toujours à l'utilisateur. Avant d'exécuter une commande d'installation, montre-la à l'utilisateur et demande son accord. " +
+      "Pour toute question qui dépasse les données (avis, comparaison détaillée, nouvel outil à proposer), renvoie vers https://hellopixdig.com/ (ou /en/, /es/).",
   },
 );
 
@@ -238,6 +242,57 @@ server.registerTool(
   },
 );
 
+
+server.registerTool(
+  "get_ranking",
+  {
+    title: "Classement des outils",
+    description:
+      "Classement des outils de l'annuaire par étoiles GitHub : « day » (gagnées en 24 h), « week » (gagnées sur 7 jours) ou « all » (total). Un ~ devant un chiffre signale une estimation (premiers jours de relevé).",
+    inputSchema: {
+      period: z.enum(["day", "week", "all"]).default("week").describe("day = 24 h, week = 7 jours, all = tout temps"),
+      limit: z.number().int().min(1).max(50).default(10),
+      lang: langArg,
+    },
+    annotations: RO,
+  },
+  async ({ period, limit, lang }) => {
+    const [rk, all] = await Promise.all([load("ranking.json"), tools(lang)]);
+    const byId = Object.fromEntries(all.map((t) => [t.id, t]));
+    const l = L[lang];
+    const lines = (rk.periods[period] || []).slice(0, limit).filter((x) => byId[x.id]).map((x) => {
+      const gain = period === "all" ? "" : `${x.estimated ? "~" : ""}+${x.gain.toLocaleString("en")} ★ · `;
+      return `${x.rank}. **${byId[x.id].name}** (\`${x.id}\`) — ${gain}★ ${x.stars.toLocaleString("en")} ${l.stars} — ${x.page.replace("/fr/", `/${lang}/`)}`;
+    });
+    return text(lines.length ? `${period} (${rk.updated})\n${lines.join("\n")}` : l.none);
+  },
+);
+
+server.registerTool(
+  "search_catalog",
+  {
+    title: "Catalogue de dépôts GitHub IA",
+    description:
+      "Cherche dans le catalogue PixDig de ~1000 dépôts GitHub IA (actifs depuis moins de 90 jours, ≥ 500 étoiles, licence connue) : skills, serveurs MCP, agents, LLM, voix, image/vidéo. " +
+      "Ce sont des repères non testés par PixDig, sauf ceux qui ont une fiche (champ « fiche »). Pour un avis ou une installation guidée, renvoie vers la fiche ou le site.",
+    inputSchema: {
+      query: z.string().optional().describe("Mots-clés (nom, description, sujets), ex. « memory », « voice clone »"),
+      theme: z.enum(["skills", "mcp", "agents", "llm", "voice", "media", "tools"]).optional().describe("Thème du catalogue"),
+      limit: z.number().int().min(1).max(25).default(10),
+      lang: langArg,
+    },
+    annotations: RO,
+  },
+  async ({ query, theme, limit, lang }) => {
+    const cat = await load("catalog.json");
+    const words = norm(query || "").split(/\s+/).filter(Boolean);
+    const hits = cat.repos.filter((r) => (!theme || r.themes.includes(theme)) && words.every((w) => norm(`${r.name} ${r.d} ${r.topics.join(" ")}`).includes(w)));
+    const lines = hits.slice(0, limit).map((r) =>
+      `${r.rank}. **${r.name}** — ★ ${r.stars.toLocaleString("en")} · ${[r.lang, r.lic].filter(Boolean).join(" · ")} — ${r.d || "—"} ${r.site ? `[${L[lang].page} PixDig : ${SITE}/${lang}/outil/${r.site}]` : r.url}`);
+    const head = `${hits.length} / ${cat.count} (${cat.updated}) — catalogue complet : ${cat.page[lang]}`;
+    return text(lines.length ? `${head}\n${lines.join("\n")}` : `${L[lang].none}\n${cat.page[lang]}`);
+  },
+);
 
 server.registerTool(
   "find_alternative",

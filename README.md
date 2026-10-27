@@ -83,6 +83,7 @@ Your agent calls the local MCP server over stdio. The server only reads public J
 | `get_model` | Details of a model: licence, parameters, context, access, required machine, official links. |
 | `find_alternative` | Free or open-source alternatives to a paid service (ChatGPT Plus, Midjourney, ElevenLabs, Zapier, Notion, Cursor…). No argument lists every service covered. |
 | `featured` | The gems currently featured. |
+| `get_ranking` | Ranking of the tools by GitHub stars: last 24 hours (`day`), 7 days (`week`) or all time (`all`). |
 
 Every tool accepts `lang: "fr" | "en" | "es"`.
 

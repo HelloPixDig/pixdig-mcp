@@ -18,5 +18,8 @@ await call("get_tool", { id: "ollama", lang: "es" });
 await call("recommend_models", { memory_gb: 12, limit: 5 });
 await call("get_model", { id: "gpt-oss-20b", lang: "en" });
 await call("featured", {});
+await call("get_ranking", { period: "day", limit: 3 });
+await call("get_ranking", { period: "all", limit: 3, lang: "en" });
 await call("get_tool", { id: "nexiste-pas" });
+await call("search_catalog", { query: "memory", limit: 3 });
 await client.close();

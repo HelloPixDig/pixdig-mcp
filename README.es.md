@@ -83,6 +83,7 @@ Su agente llama al servidor MCP local por stdio. El servidor solo lee archivos J
 | `get_model` | Detalles de un modelo: licencia, parámetros, contexto, acceso, equipo necesario, enlaces oficiales. |
 | `find_alternative` | Alternativas gratuitas o de código abierto a un servicio de pago (ChatGPT Plus, Midjourney, ElevenLabs, Zapier, Notion, Cursor…). Sin argumento, lista todos los servicios cubiertos. |
 | `featured` | Las joyas destacadas en este momento. |
+| `get_ranking` | Ranking de las herramientas por estrellas de GitHub: 24 h (`day`), 7 días (`week`) o todos los tiempos (`all`). |
 
 Cada herramienta acepta `lang: "fr" | "en" | "es"`.
 

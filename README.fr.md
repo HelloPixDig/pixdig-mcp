@@ -83,6 +83,7 @@ Votre agent appelle le serveur MCP local via stdio. Le serveur ne fait que lire 
 | `get_model` | Détails d'un modèle : licence, paramètres, contexte, accès, machine requise, liens officiels. |
 | `find_alternative` | Alternatives gratuites ou open source à un service payant (ChatGPT Plus, Midjourney, ElevenLabs, Zapier, Notion, Cursor…). Sans argument, liste tous les services couverts. |
 | `featured` | Les pépites actuellement à la une. |
+| `get_ranking` | Classement des outils par étoiles GitHub : 24 h (`day`), 7 jours (`week`) ou tout temps (`all`). |
 
 Chaque outil accepte `lang: "fr" | "en" | "es"`.
 
