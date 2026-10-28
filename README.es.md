@@ -12,7 +12,7 @@
 
 > El directorio de joyas de IA, directamente en su agente.
 
-**PixDig MCP** conecta su agente de código con el directorio [PixDig](https://hellopixdig.com/es/): más de 100 herramientas de IA verificadas (estrellas reales de GitHub, licencia, precio, compatibilidad, equipo necesario) y más de 40 LLM, con un prompt de instalación listo para seguir en cada una. Solo lectura, sin cuenta, sin clave de API.
+**PixDig MCP** conecta su agente de código con el directorio [PixDig](https://hellopixdig.com/es/): más de 150 herramientas de IA verificadas (estrellas reales de GitHub, licencia, precio, compatibilidad, equipo necesario), más de 40 LLM y un catálogo seleccionado de unos 1000 repositorios de GitHub, con un prompt de instalación listo para seguir en cada herramienta. Solo lectura, sin cuenta, sin clave de API.
 
 ## Véalo en acción
 
@@ -72,7 +72,7 @@ claude mcp add pixdig -- npx -y https://hellopixdig.com/pixdig-mcp.tgz
 
 Su agente llama al servidor MCP local por stdio. El servidor solo lee archivos JSON públicos publicados por el sitio de PixDig, actualizados cada noche.
 
-## Las 7 herramientas
+## Las 9 herramientas
 
 | Herramienta | Qué hace |
 |---|---|
@@ -83,6 +83,7 @@ Su agente llama al servidor MCP local por stdio. El servidor solo lee archivos J
 | `get_model` | Detalles de un modelo: licencia, parámetros, contexto, acceso, equipo necesario, enlaces oficiales. |
 | `find_alternative` | Alternativas gratuitas o de código abierto a un servicio de pago (ChatGPT Plus, Midjourney, ElevenLabs, Zapier, Notion, Cursor…). Sin argumento, lista todos los servicios cubiertos. |
 | `featured` | Las joyas destacadas en este momento. |
+| `search_catalog` | Busca en el catálogo seleccionado de unos 1000 repositorios de GitHub (skills, servidores MCP, agentes, LLM, voz, medios, herramientas), ordenados por estrellas y frescura. Filtro por `theme`. |
 | `get_ranking` | Ranking de las herramientas por estrellas de GitHub: 24 h (`day`), 7 días (`week`) o todos los tiempos (`all`). |
 
 Cada herramienta acepta `lang: "fr" | "en" | "es"`.

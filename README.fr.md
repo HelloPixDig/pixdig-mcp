@@ -12,7 +12,7 @@
 
 > L'annuaire des pépites IA, directement dans votre agent.
 
-**PixDig MCP** relie votre agent de code à l'annuaire [PixDig](https://hellopixdig.com/fr/) : plus de 100 outils d'IA vérifiés (étoiles GitHub réelles, licence, prix, compatibilité, machine nécessaire) et plus de 40 LLM, avec pour chacun un prompt d'installation prêt à suivre. Lecture seule, sans compte, sans clé d'API.
+**PixDig MCP** relie votre agent de code à l'annuaire [PixDig](https://hellopixdig.com/fr/) : plus de 150 outils d'IA vérifiés (étoiles GitHub réelles, licence, prix, compatibilité, machine nécessaire), plus de 40 LLM et un catalogue sélectionné d'environ 1 000 dépôts GitHub, avec pour chaque outil un prompt d'installation prêt à suivre. Lecture seule, sans compte, sans clé d'API.
 
 ## Voir le résultat
 
@@ -72,7 +72,7 @@ Vous préférez vérifier avant ? Tout le serveur tient dans un seul fichier lis
 
 Votre agent appelle le serveur MCP local via stdio. Le serveur ne fait que lire des fichiers JSON publics publiés par le site PixDig, mis à jour chaque nuit.
 
-## Les 7 outils
+## Les 9 outils
 
 | Outil | Rôle |
 |---|---|
@@ -83,6 +83,7 @@ Votre agent appelle le serveur MCP local via stdio. Le serveur ne fait que lire 
 | `get_model` | Détails d'un modèle : licence, paramètres, contexte, accès, machine requise, liens officiels. |
 | `find_alternative` | Alternatives gratuites ou open source à un service payant (ChatGPT Plus, Midjourney, ElevenLabs, Zapier, Notion, Cursor…). Sans argument, liste tous les services couverts. |
 | `featured` | Les pépites actuellement à la une. |
+| `search_catalog` | Cherche dans le catalogue sélectionné d'environ 1 000 dépôts GitHub (skills, serveurs MCP, agents, LLM, voix, média, outils), classés par étoiles et fraîcheur. Filtre par `theme`. |
 | `get_ranking` | Classement des outils par étoiles GitHub : 24 h (`day`), 7 jours (`week`) ou tout temps (`all`). |
 
 Chaque outil accepte `lang: "fr" | "en" | "es"`.

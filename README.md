@@ -12,7 +12,7 @@
 
 > The AI gems directory, right inside your agent.
 
-**PixDig MCP** connects your coding agent to the [PixDig](https://hellopixdig.com/en/) directory: more than 100 vetted AI tools (real GitHub stars, licence, price, compatibility, the machine you need) and 40+ LLMs, with a ready-to-follow install prompt for each one. Read-only, no account, no API key.
+**PixDig MCP** connects your coding agent to the [PixDig](https://hellopixdig.com/en/) directory: more than 150 vetted AI tools (real GitHub stars, licence, price, compatibility, the machine you need), 40+ LLMs and a curated catalogue of about 1,000 GitHub repositories, with a ready-to-follow install prompt for each tool. Read-only, no account, no API key.
 
 ## See it work
 
@@ -72,7 +72,7 @@ Prefer to check first? The whole server is one readable file, [`src/index.js`](s
 
 Your agent calls the local MCP server over stdio. The server only reads public JSON files published by the PixDig website, refreshed every night.
 
-## The 7 tools
+## The 9 tools
 
 | Tool | What it does |
 |---|---|
@@ -83,6 +83,7 @@ Your agent calls the local MCP server over stdio. The server only reads public J
 | `get_model` | Details of a model: licence, parameters, context, access, required machine, official links. |
 | `find_alternative` | Free or open-source alternatives to a paid service (ChatGPT Plus, Midjourney, ElevenLabs, Zapier, Notion, Cursor…). No argument lists every service covered. |
 | `featured` | The gems currently featured. |
+| `search_catalog` | Search the curated catalogue of about 1,000 GitHub repositories (skills, MCP servers, agents, LLM, voice, media, tools), ranked by stars and freshness. Filter by `theme`. |
 | `get_ranking` | Ranking of the tools by GitHub stars: last 24 hours (`day`), 7 days (`week`) or all time (`all`). |
 
 Every tool accepts `lang: "fr" | "en" | "es"`.
